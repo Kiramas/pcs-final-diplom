@@ -39,17 +39,18 @@ public class BooleanSearchEngine implements SearchEngine {
                         searchingResult = wordsMap.get(entry.getKey());
                     }
                     searchingResult.add(new PageEntry(pdf.getName(), pageNum, entry.getValue()));
-                    Collections.sort(searchingResult, Collections.reverseOrder());
+                    searchingResult.sort(Collections.reverseOrder());
                     wordsMap.put(entry.getKey(), searchingResult);
                 }
             }
-
         }
     }
 
     @Override
     public List<PageEntry> search(String word) {
-
-        return wordsMap.get(word.toLowerCase());
+        if (wordsMap.containsKey(word)) {
+            return wordsMap.get(word);
+        }
+        return Collections.emptyList();
     }
 }
